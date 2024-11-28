@@ -1,0 +1,437 @@
+{
+  "shops": [
+    {
+      "id": 1,
+      "name": "Tech Haven",
+      "description": "Your tech paradise.",
+      "logo": "https://via.placeholder.com/100",
+      "products": [1, 2]
+    },
+    {
+      "id": 2,
+      "name": "Fashion Fiesta",
+      "description": "Trendy apparel.",
+      "logo": "https://via.placeholder.com/100",
+      "products": [3, 4]
+    },
+    {
+      "id": 3,
+      "name": "Gadget World",
+      "description": "Latest gadgets and gizmos.",
+      "logo": "https://via.placeholder.com/100",
+      "products": [5, 6]
+    },
+    {
+      "id": 4,
+      "name": "Book Nook",
+      "description": "Books for every reader.",
+      "logo": "https://via.placeholder.com/100",
+      "products": [7, 8]
+    },
+    {
+      "id": 5,
+      "name": "Shoe Shack",
+      "description": "Shoes for every occasion.",
+      "logo": "https://via.placeholder.com/100",
+      "products": [9, 10]
+    },
+    {
+      "id": 6,
+      "name": "Sports Hub",
+      "description": "Gear for champions.",
+      "logo": "https://via.placeholder.com/100",
+      "products": [11, 12]
+    },
+    {
+      "id": 7,
+      "name": "Groceries Galore",
+      "description": "Fresh produce and more.",
+      "logo": "https://via.placeholder.com/100",
+      "products": [13, 14]
+    },
+    {
+      "id": 8,
+      "name": "Furniture World",
+      "description": "Furniture for your home.",
+      "logo": "https://via.placeholder.com/100",
+      "products": [15, 16]
+    },
+    {
+      "id": 9,
+      "name": "Toy Kingdom",
+      "description": "Toys for all ages.",
+      "logo": "https://via.placeholder.com/100",
+      "products": [17, 18]
+    },
+    {
+      "id": 10,
+      "name": "Pet Paradise",
+      "description": "All your pet needs.",
+      "logo": "https://via.placeholder.com/100",
+      "products": [19, 20]
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "shopId": 1,
+      "name": "Smartphone",
+      "price": 699,
+      "stock": 30,
+      "description": "Latest model with high-end features.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 2,
+      "shopId": 1,
+      "name": "Laptop",
+      "price": 1200,
+      "stock": 15,
+      "description": "High-performance laptop for professionals.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 3,
+      "shopId": 2,
+      "name": "Denim Jacket",
+      "price": 50,
+      "stock": 20,
+      "description": "Stylish and comfortable.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 4,
+      "shopId": 2,
+      "name": "Sneakers",
+      "price": 70,
+      "stock": 25,
+      "description": "Perfect for casual outings.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 5,
+      "shopId": 3,
+      "name": "Wireless Earbuds",
+      "price": 150,
+      "stock": 50,
+      "description": "Immersive sound quality.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 6,
+      "shopId": 3,
+      "name": "Smartwatch",
+      "price": 300,
+      "stock": 10,
+      "description": "Track your fitness on the go.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 7,
+      "shopId": 4,
+      "name": "Novel",
+      "price": 20,
+      "stock": 40,
+      "description": "A gripping story for book lovers.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 8,
+      "shopId": 4,
+      "name": "Notebook",
+      "price": 5,
+      "stock": 100,
+      "description": "Perfect for taking notes.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 9,
+      "shopId": 5,
+      "name": "Running Shoes",
+      "price": 80,
+      "stock": 30,
+      "description": "Comfortable and durable.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 10,
+      "shopId": 5,
+      "name": "Sandals",
+      "price": 30,
+      "stock": 50,
+      "description": "Lightweight and airy.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 11,
+      "shopId": 6,
+      "name": "Basketball",
+      "price": 25,
+      "stock": 20,
+      "description": "Official size and weight.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 12,
+      "shopId": 6,
+      "name": "Tennis Racket",
+      "price": 60,
+      "stock": 15,
+      "description": "High-performance racket.",
+      "image": "https://via.placeholder.com/100"
+    },
+
+    {
+      "id": 13,
+      "shopId": 7,
+      "name": "Organic Apples",
+      "price": 3,
+      "stock": 100,
+      "description": "Fresh and organic apples.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 14,
+      "shopId": 7,
+      "name": "Whole Wheat Bread",
+      "price": 4,
+      "stock": 50,
+      "description": "Healthy and delicious.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 15,
+      "shopId": 8,
+      "name": "Wooden Dining Table",
+      "price": 300,
+      "stock": 10,
+      "description": "Elegant and sturdy.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 16,
+      "shopId": 8,
+      "name": "Leather Sofa",
+      "price": 1200,
+      "stock": 5,
+      "description": "Comfortable and stylish.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 17,
+      "shopId": 9,
+      "name": "Toy Car",
+      "price": 15,
+      "stock": 60,
+      "description": "Fun for kids of all ages.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 18,
+      "shopId": 9,
+      "name": "Dollhouse",
+      "price": 50,
+      "stock": 20,
+      "description": "Imaginative playtime for children.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 19,
+      "shopId": 10,
+      "name": "Dog Collar",
+      "price": 10,
+      "stock": 40,
+      "description": "Durable and adjustable.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 20,
+      "shopId": 10,
+      "name": "Cat Scratching Post",
+      "price": 25,
+      "stock": 30,
+      "description": "Keeps your feline happy.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 21,
+      "shopId": 11,
+      "name": "Chef's Knife",
+      "price": 35,
+      "stock": 25,
+      "description": "Precision cutting for all your needs.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 22,
+      "shopId": 11,
+      "name": "Non-Stick Frying Pan",
+      "price": 20,
+      "stock": 30,
+      "description": "Perfect for healthy cooking.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 23,
+      "shopId": 12,
+      "name": "Lipstick",
+      "price": 15,
+      "stock": 40,
+      "description": "Long-lasting and vibrant.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 24,
+      "shopId": 12,
+      "name": "Face Cream",
+      "price": 30,
+      "stock": 25,
+      "description": "Hydrates and nourishes skin.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 25,
+      "shopId": 13,
+      "name": "Car Wax",
+      "price": 10,
+      "stock": 50,
+      "description": "Shiny and protective finish.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 26,
+      "shopId": 13,
+      "name": "Car Vacuum Cleaner",
+      "price": 80,
+      "stock": 15,
+      "description": "Compact and powerful.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 27,
+      "shopId": 14,
+      "name": "Protein Powder",
+      "price": 50,
+      "stock": 20,
+      "description": "Supports muscle growth.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 28,
+      "shopId": 14,
+      "name": "Yoga Mat",
+      "price": 25,
+      "stock": 30,
+      "description": "Non-slip and durable.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 29,
+      "shopId": 15,
+      "name": "Ballpoint Pens",
+      "price": 5,
+      "stock": 100,
+      "description": "Smooth and reliable.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 30,
+      "shopId": 15,
+      "name": "Notebook Set",
+      "price": 10,
+      "stock": 50,
+      "description": "Assorted sizes and designs.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 31,
+      "shopId": 16,
+      "name": "Acoustic Guitar",
+      "price": 200,
+      "stock": 10,
+      "description": "Perfect for beginners and pros.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 32,
+      "shopId": 16,
+      "name": "Drum Set",
+      "price": 500,
+      "stock": 5,
+      "description": "High-quality sound and build.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 33,
+      "shopId": 17,
+      "name": "Dumbbell Set",
+      "price": 80,
+      "stock": 20,
+      "description": "Adjustable weights for your workouts.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 34,
+      "shopId": 17,
+      "name": "Treadmill",
+      "price": 1200,
+      "stock": 5,
+      "description": "Stay fit at home.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 35,
+      "shopId": 18,
+      "name": "Acrylic Paint Set",
+      "price": 25,
+      "stock": 30,
+      "description": "Vibrant colors for artists.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 36,
+      "shopId": 18,
+      "name": "Sketch Pad",
+      "price": 10,
+      "stock": 50,
+      "description": "Great for drawings and sketches.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 37,
+      "shopId": 19,
+      "name": "Camping Tent",
+      "price": 100,
+      "stock": 15,
+      "description": "Easy to set up and durable.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 38,
+      "shopId": 19,
+      "name": "Hiking Backpack",
+      "price": 60,
+      "stock": 20,
+      "description": "Comfortable and spacious.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 39,
+      "shopId": 20,
+      "name": "Bluetooth Speaker",
+      "price": 50,
+      "stock": 25,
+      "description": "Compact with excellent sound.",
+      "image": "https://via.placeholder.com/100"
+    },
+    {
+      "id": 40,
+      "shopId": 20,
+      "name": "4K TV",
+      "price": 900,
+      "stock": 5,
+      "description": "Stunning picture quality.",
+      "image": "https://via.placeholder.com/100"
+    }
+  ]
+}
