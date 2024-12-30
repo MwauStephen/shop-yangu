@@ -1,28 +1,22 @@
-import localFont from "next/font/local";
-import "./globals.css";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import React from "react";
+import { Provider } from "@/components/ui/provider";
+import DashboardLayout from "@/components/DashboardLayout";
 
 export const metadata = {
-  title: "Shop Yangu",
-  description: "An E-Commerece admin dashboard",
+  title: "Shop Yangu | E-commerce",
+  description: "An E-commerce admin dashboard",
 };
 
-export default function RootLayout({ children }) {
+const RootLayout = ({ children }) => {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+      <body>
+        <Provider>
+          <DashboardLayout>{children}</DashboardLayout>
+        </Provider>
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
