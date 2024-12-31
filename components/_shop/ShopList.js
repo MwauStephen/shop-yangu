@@ -167,7 +167,7 @@ const ShopList = () => {
                           <FaTrash size="1px" />
                         </IconButton>
                       }
-                      title={`Delete ${item.name}`}
+                      title={`Delete ${item.name} Shop`}
                       footerActions={[
                         <Flex gap={2} key={item.id}>
                           <Button key="close" variant="outline">
