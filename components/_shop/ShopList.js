@@ -55,7 +55,7 @@ const items = [
   },
 ];
 
-const ShopList = () => {
+const ShopList = ({ shops = [] }) => {
   return (
     <Card.Root p={4} boxShadow="xl">
       <Box textAlign="end" mb={4}>
@@ -92,102 +92,107 @@ const ShopList = () => {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {items.map((item, index) => (
-              <Table.Row key={item.id}>
-                <Table.Cell>{index + 1}</Table.Cell>
-                <Table.Cell>{item.name}</Table.Cell>
-                <Table.Cell
-                  maxWidth="300px"
-                  whiteSpace="nowrap"
-                  overflow="hidden"
-                  textOverflow="ellipsis"
-                >
-                  {item.description}
-                </Table.Cell>
-                <Table.Cell textAlign="end">
-                  <Badge colorPalette="green">{item.status}</Badge>
-                </Table.Cell>
-                <Table.Cell>
-                  <Flex justifyContent="flex-end">
-                    <Image
-                      src={item.logo}
-                      width={40}
-                      height={40}
-                      alt={item.name}
-                    />
-                  </Flex>
-                </Table.Cell>
-                <Table.Cell textAlign="end">
-                  <Flex justifyContent="space-around">
-                    <ViewCard
-                      triggerContent={
-                        <IconButton background="teal" size="2xs">
-                          <FaEye />
-                        </IconButton>
-                      }
-                      title="Shop Details"
-                      footerActions={[
-                        <Button key="close" variant="outline">
-                          Close
-                        </Button>,
-                      ]}
-                    >
-                      <Stack spacing={4}>
-                        <Text>
-                          <Image
-                            src={item.logo}
-                            width={400}
-                            height={400}
-                            alt={item.name}
-                          />
-                        </Text>
-                        <Text>
-                          <b>Shop Name:</b> {item.name}
-                        </Text>
-                        <Text>
-                          <b>Description: </b> {item.description}
-                        </Text>
-                      </Stack>
-                    </ViewCard>
-
-                    <ViewCard
-                      triggerContent={
-                        <IconButton size="2xs" background="blue.500">
-                          <FaPencil size="1px" />
-                        </IconButton>
-                      }
-                      title={`Edit ${item.name}`}
-                    >
-                      <ShopForm />
-                    </ViewCard>
-
-                    <ViewCard
-                      triggerContent={
-                        <IconButton size="2xs" background="red.600">
-                          <FaTrash size="1px" />
-                        </IconButton>
-                      }
-                      title={`Delete ${item.name} Shop`}
-                      footerActions={[
-                        <Flex gap={2} key={item.id}>
+            {shops.map((item, index) => {
+              const status = item.products.length > 0 ? "Active" : "Inactive";
+              return (
+                <Table.Row key={item.id}>
+                  <Table.Cell>{index + 1}</Table.Cell>
+                  <Table.Cell>{item.name}</Table.Cell>
+                  <Table.Cell
+                    maxWidth="300px"
+                    whiteSpace="nowrap"
+                    overflow="hidden"
+                    textOverflow="ellipsis"
+                  >
+                    {item.description}
+                  </Table.Cell>
+                  <Table.Cell textAlign="end">
+                    <Badge colorPalette={status === "Active" ? "green" : "red"}>
+                      {status}
+                    </Badge>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Flex justifyContent="flex-end">
+                      <Image
+                        src={item.logo}
+                        width={40}
+                        height={40}
+                        alt={item.name}
+                      />
+                    </Flex>
+                  </Table.Cell>
+                  <Table.Cell textAlign="end">
+                    <Flex justifyContent="space-around">
+                      <ViewCard
+                        triggerContent={
+                          <IconButton background="teal" size="2xs">
+                            <FaEye />
+                          </IconButton>
+                        }
+                        title="Shop Details"
+                        footerActions={[
                           <Button key="close" variant="outline">
                             Close
-                          </Button>
-                          <Button key="close" colorPalette="red">
-                            Delete
-                          </Button>
-                        </Flex>,
-                      ]}
-                    >
-                      <Text>
-                        Are you sure you want to delete {` ${item.name}`}?This
-                        action cannot be undone.
-                      </Text>
-                    </ViewCard>
-                  </Flex>
-                </Table.Cell>
-              </Table.Row>
-            ))}
+                          </Button>,
+                        ]}
+                      >
+                        <Stack spacing={4}>
+                          <Text>
+                            <Image
+                              src={item.logo}
+                              width={400}
+                              height={400}
+                              alt={item.name}
+                            />
+                          </Text>
+                          <Text>
+                            <b>Shop Name:</b> {item.name}
+                          </Text>
+                          <Text>
+                            <b>Description: </b> {item.description}
+                          </Text>
+                        </Stack>
+                      </ViewCard>
+
+                      <ViewCard
+                        triggerContent={
+                          <IconButton size="2xs" background="blue.500">
+                            <FaPencil size="1px" />
+                          </IconButton>
+                        }
+                        title={`Edit ${item.name}`}
+                      >
+                        <ShopForm shopDetailsToEdit={item} />
+                      </ViewCard>
+
+                      <ViewCard
+                        triggerContent={
+                          <IconButton size="2xs" background="red.600">
+                            <FaTrash size="1px" />
+                          </IconButton>
+                        }
+                        title={`Delete ${item.name} Shop`}
+                        footerActions={[
+                          <Flex gap={2} key={item.id}>
+                            <Button key="close" variant="outline">
+                              Close
+                            </Button>
+                            <Button key="close" colorPalette="red">
+                              Delete
+                            </Button>
+                          </Flex>,
+                        ]}
+                      >
+                        <Text>
+                          Are you sure you want to delete {` ${item.name}`}?This
+                          action cannot be undone.
+                        </Text>
+                      </ViewCard>
+                    </Flex>
+                  </Table.Cell>
+                </Table.Row>
+              );
+            })}
           </Table.Body>
           <Table.Footer>
             <Pagination />
