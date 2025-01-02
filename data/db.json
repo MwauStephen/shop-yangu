@@ -4,70 +4,70 @@
       "id": 1,
       "name": "Tech Haven",
       "description": "Your tech paradise.",
-      "logo": "https://via.placeholder.com/100",
-      "products": [1, 2]
+      "logo": "https://via.placeholder.com/100x100?text=Tech+Haven",
+      "products": []
     },
     {
       "id": 2,
       "name": "Fashion Fiesta",
       "description": "Trendy apparel.",
-      "logo": "https://via.placeholder.com/100",
+      "logo": "https://via.placeholder.com/100x100?text=Fashion+Fiesta",
       "products": [3, 4]
     },
     {
       "id": 3,
       "name": "Gadget World",
       "description": "Latest gadgets and gizmos.",
-      "logo": "https://via.placeholder.com/100",
+      "logo": "https://via.placeholder.com/100x100?text=Gadget+World",
       "products": [5, 6]
     },
     {
       "id": 4,
       "name": "Book Nook",
       "description": "Books for every reader.",
-      "logo": "https://via.placeholder.com/100",
+      "logo": "https://via.placeholder.com/100x100?text=Book+Nook",
       "products": [7, 8]
     },
     {
       "id": 5,
       "name": "Shoe Shack",
       "description": "Shoes for every occasion.",
-      "logo": "https://via.placeholder.com/100",
+      "logo": "https://via.placeholder.com/100x100?text=Shoe+Shack",
       "products": [9, 10]
     },
     {
       "id": 6,
       "name": "Sports Hub",
       "description": "Gear for champions.",
-      "logo": "https://via.placeholder.com/100",
+      "logo": "https://via.placeholder.com/100x100?text=Sports+Hub",
       "products": [11, 12]
     },
     {
       "id": 7,
       "name": "Groceries Galore",
       "description": "Fresh produce and more.",
-      "logo": "https://via.placeholder.com/100",
+      "logo": "https://via.placeholder.com/100x100?text=Groceries+Galore",
       "products": [13, 14]
     },
     {
       "id": 8,
       "name": "Furniture World",
       "description": "Furniture for your home.",
-      "logo": "https://via.placeholder.com/100",
+      "logo": "https://via.placeholder.com/100x100?text=Furniture+World",
       "products": [15, 16]
     },
     {
       "id": 9,
       "name": "Toy Kingdom",
       "description": "Toys for all ages.",
-      "logo": "https://via.placeholder.com/100",
+      "logo": "https://via.placeholder.com/100x100?text=Toy+Kingdom",
       "products": [17, 18]
     },
     {
       "id": 10,
       "name": "Pet Paradise",
       "description": "All your pet needs.",
-      "logo": "https://via.placeholder.com/100",
+      "logo": "https://via.placeholder.com/100x100?text=Pet+Paradise",
       "products": [19, 20]
     }
   ],
