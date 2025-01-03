@@ -6,12 +6,15 @@ import StockGraph from "@/components/_dashboard/StockGraph";
 import TopShops from "@/components/_dashboard/TopShops";
 import Metrics from "@/components/_dashboard/Metrics";
 import ShopList from "@/components/_shop/ShopList";
+import ProductList from "@/components/_product/ProductList";
+import { useFetchShops } from "./_hooks/ShopHooks";
 
 const HomePage = () => {
+  const { shops } = useFetchShops();
   return (
     <Box as="section" p="2rem 1rem">
       <Text as="h1" fontWeight="bold" fontSize="1.2rem" mb={8}>
-        Welcome to your Shop admin panel
+        Welcome to Shop Yangu panel
       </Text>
       <Box as="section" my={8}>
         <Metrics />
@@ -24,10 +27,11 @@ const HomePage = () => {
       </Box>
 
       <Box as="section" my={8}>
-        <ShopList />
+        <ShopList shops={shops} />
       </Box>
-
-      <Text>Shop charts</Text>
+      <Box as="section" my={8}>
+        <ProductList />
+      </Box>
     </Box>
   );
 };
