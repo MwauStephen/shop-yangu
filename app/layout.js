@@ -3,6 +3,7 @@ import { Provider } from "@/components/ui/provider";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Roboto } from "next/font/google";
 import QueryProvider from "@/components/QueryProvider";
+import Toaster from "@/components/Toaster";
 
 // loading fonts
 const roboto = Roboto({
@@ -21,8 +22,10 @@ const RootLayout = ({ children }) => {
     <html lang="en">
       <body className={roboto.className}>
         <Provider>
-          <QueryProvider />
-          <DashboardLayout>{children}</DashboardLayout>
+          <Toaster />
+          <QueryProvider>
+            <DashboardLayout>{children}</DashboardLayout>
+          </QueryProvider>
         </Provider>
       </body>
     </html>
