@@ -1,52 +1,6 @@
-// "use client";
-// import { Button } from "@/components/ui/button";
-// import {
-//   DialogActionTrigger,
-//   DialogBody,
-//   DialogCloseTrigger,
-//   DialogContent,
-//   DialogFooter,
-//   DialogHeader,
-//   DialogRoot,
-//   DialogTitle,
-//   DialogTrigger,
-// } from "@/components/ui/dialog";
-
-// const ViewCard = ({ children }) => {
-//   return (
-//     <DialogRoot>
-//       <DialogTrigger asChild>
-//         {children}
-//         {/* <Button variant="outline" size="sm">
-//           Open Dialog
-//         </Button> */}
-//       </DialogTrigger>
-//       <DialogContent>
-//         <DialogHeader>
-//           <DialogTitle>Dialog Title</DialogTitle>
-//         </DialogHeader>
-//         <DialogBody>
-//           <p>
-//             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-//             eiusmod tempor incididunt ut labore et dolore magna aliqua.
-//           </p>
-//         </DialogBody>
-//         <DialogFooter>
-//           <DialogActionTrigger asChild>
-//             <Button variant="outline">Cancel</Button>
-//           </DialogActionTrigger>
-//           <Button>Save</Button>
-//         </DialogFooter>
-//         <DialogCloseTrigger />
-//       </DialogContent>
-//     </DialogRoot>
-//   );
-// };
-
-// export default ViewCard;
-
 "use client";
 
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DialogActionTrigger,
@@ -66,9 +20,16 @@ const ViewCard = ({
   children, // Content inside the modal
   footerActions, // Footer actions as an array of JSX elements
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpen = () => setIsOpen(true);
+  const handleClose = () => setIsOpen(false);
+
   return (
-    <DialogRoot>
-      <DialogTrigger asChild>{triggerContent}</DialogTrigger>
+    <DialogRoot open={isOpen} onOpenChange={(e) => setIsOpen(e.isOpen)}>
+      <DialogTrigger asChild onClick={handleOpen}>
+        {triggerContent}
+      </DialogTrigger>
 
       <DialogContent>
         {title && (
@@ -77,7 +38,7 @@ const ViewCard = ({
           </DialogHeader>
         )}
 
-        <DialogBody>{children}</DialogBody>
+        <DialogBody>{React.cloneElement(children, { handleClose })}</DialogBody>
 
         {footerActions && (
           <DialogFooter>
@@ -89,7 +50,9 @@ const ViewCard = ({
           </DialogFooter>
         )}
 
-        <DialogCloseTrigger />
+        {/* <DialogCloseTrigger asChild>
+          <Button onClick={handleClose}>Close</Button>
+        </DialogCloseTrigger> */}
       </DialogContent>
     </DialogRoot>
   );
