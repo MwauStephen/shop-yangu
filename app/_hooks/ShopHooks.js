@@ -5,7 +5,7 @@ import {
   updateShop as updateShopApi,
   deleteShop as deleteShopApi,
 } from "../_lib/apiServices";
-import { toaster } from "@/components/ui/toaster";
+import toast from "react-hot-toast";
 
 // custom hooks for shops
 export const useFetchShops = () => {
@@ -24,44 +24,33 @@ export const useFetchShops = () => {
 export const useAddShop = () => {
   const queryClient = useQueryClient();
   const { mutate: addNewShop, isLoading } = useMutation({
-    mutationFn: (shop) => addShop(shop),
+    mutationFn: addShop,
     onSuccess: () => {
+      toast.success("Shop added successfully");
       // invalidate the query to refetch the data
-      queryClient.invalidateQueries(["shops"]);
-      toaster.create({
-        title: "Shop added successfully",
-        type: "success",
-        placement: "top-center",
+      queryClient.invalidateQueries({
+        queryKey: ["shops"],
       });
     },
     onError: (error) => {
-      toaster.create({
-        title: `Shop could not be added.${error.message}`,
-        type: "error",
-        placement: "top-center",
-      });
+      toast.error(`Shop could not be added.${error.message}`);
     },
   });
   return { addNewShop, isLoading };
 };
 export const useUpdateShop = () => {
   const queryClient = useQueryClient();
+
   const { mutate: updateShop, isLoading } = useMutation({
-    mutationFn: ({ shop, id }) => updateShopApi(shop, id),
+    mutationFn: ({ updateShopData, id }) => updateShopApi(updateShopData, id),
     onSuccess: () => {
-      queryClient.invalidateQueries(["shops"]);
-      toaster.create({
-        title: "Shop updated successfully",
-        type: "success",
-        placement: "top-center",
+      toast.success("Shop updated successfully");
+      queryClient.invalidateQueries({
+        queryKey: ["shops"],
       });
     },
     onError: (error) => {
-      toaster.create({
-        title: `Shop could not be updated.${error.message}`,
-        type: "error",
-        placement: "top-center",
-      });
+      toast.error(`Shop could not be updated.${error.message}`);
     },
   });
 
@@ -72,19 +61,14 @@ export const useDeleteShop = () => {
   const { mutate: deleteShop, isLoading } = useMutation({
     mutationFn: (id) => deleteShopApi(id),
     onSuccess: () => {
-      queryClient.invalidateQueries(["shops"]);
-      toaster.create({
-        title: "Shop deleted successfully",
-        type: "success",
-        placement: "top-center",
+      toast.success("Shop deleted successfully");
+      // invalidate the query to refetch the data
+      queryClient.invalidateQueries({
+        queryKey: ["shops"],
       });
     },
     onError: (error) => {
-      toaster.create({
-        title: `Shop could not be deleted.${error.message}`,
-        type: "error",
-        placement: "top-center",
-      });
+      toast.error(`Shop could not be deleted.${error.message}`);
     },
   });
 
