@@ -58,6 +58,7 @@ export const useUpdateShop = () => {
 };
 export const useDeleteShop = () => {
   const queryClient = useQueryClient();
+  
   const { mutate: deleteShop, isLoading } = useMutation({
     mutationFn: (id) => deleteShopApi(id),
     onSuccess: () => {
