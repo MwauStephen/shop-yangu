@@ -6,10 +6,12 @@ const productImageUrl = `${supabaseUrl}/storage/v1/object/public/product/`;
 
 // 1.api function for selecting all shops
 export const getAllShops = async () => {
-  const { data, error } = await supabase.from("shops").select("*");
+  const { data, error, count } = await supabase
+    .from("shops")
+    .select("*", { count: "exact" });
   if (error)
     throw new Error(`Shop details could not be fetched.${error.message}`);
-  return data;
+  return { data, count };
 };
 
 // 2.api function for adding a new shop
@@ -113,10 +115,12 @@ export const deleteShop = async (id) => {
 
 // 1.api function for selecting all products
 export const getAllProducts = async () => {
-  const { data, error } = await supabase.from("products").select("*");
+  const { data, error, count } = await supabase
+    .from("products")
+    .select("*", { count: "exact" });
   if (error)
     throw new Error(`Product details couldn't be fetched.${error.message}`);
-  return data;
+  return { data, count };
 };
 // 2.api function for adding a new product
 export const addProduct = async (product) => {
@@ -250,3 +254,30 @@ export const deleteProduct = async (id) => {
   if (error) throw new Error(error.message);
   return data;
 };
+
+// 5.api function for product stats summary
+export const getProductSummary = async () => {
+  const { data, error } = await supabase.from("products").select("*");
+
+  if (error)
+    throw new Error(`Product details couldn't be fetched. ${error.message}`);
+
+  // calculate the total value of all products(price *stock level)
+  const totalValue = data.reduce((acc, product) => {
+    const productValue = product.price * product.stockLevel;
+    return acc + productValue;
+  });
+
+  console.log(totalValue, "total value from api function");
+
+  // caluclate total stock level (sum of all stock levels)
+  const totalStockLevel = data.reduce((acc, product) => {
+    return acc + product.stockLevel;
+  });
+
+  console.log(totalStockLevel, "total stock level from api function");
+
+  return { totalValue, totalStockLevel };
+};
+
+
