@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 import { Box, Card, Flex, Input, Text, Textarea } from "@chakra-ui/react";
 import { Field } from "../ui/field";
 import { Button } from "../ui/button";
@@ -6,13 +6,31 @@ import UploadButton from "../UploadButton";
 import SelectContainer from "../SelectContainer";
 import { useFetchShops } from "@/app/_hooks/ShopHooks";
 import { useForm } from "react-hook-form";
+import { useAddProduct } from "@/app/_hooks/ProductsHooks";
 
-const ProductForm = () => {
+const ProductForm = ({ productDetailsToEdit, handleClose }) => {
   const { shops } = useFetchShops();
-  const { register, formState, reset, handleSubmit } = useForm();
+  const { id: editId, ...editValues } = productDetailsToEdit;
+
+  const isEditSession = Boolean(editId);
+
+  const { register, formState, reset, handleSubmit } = useForm({
+    defaultValues: isEditSession ? editValues : {},
+  });
+  const { addNewProduct } = useAddProduct();
 
   // handle form submission
   const handleOnSubmit = (data) => {
+    const image = typeof data.image === "string" ? data.image : data.image[0];
+    addNewProduct(
+      { ...data, image: image },
+      {
+        onSuccess: () => {
+          reset();
+          handleClose();
+        },
+      }
+    );
     console.log(data, "data from form");
   };
 
@@ -46,7 +64,13 @@ const ProductForm = () => {
           <UploadButton {...register("image")} />
         </Field>
         <Box textAlign={{ base: "center", md: "right" }}>
-          <Button textAlign="left" variant="outline" type="reset" mr={4}>
+          <Button
+            textAlign="left"
+            variant="outline"
+            type="reset"
+            mr={4}
+            onClick={handleClose}
+          >
             Cancel
           </Button>
           <Button
