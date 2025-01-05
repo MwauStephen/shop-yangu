@@ -1,3 +1,4 @@
+"use client";
 import {
   Card,
   Table,
@@ -15,47 +16,11 @@ import Pagination from "../Pagination";
 import ViewCard from "../ViewCard";
 import Image from "next/image";
 import ShopForm from "./ShopForm";
+import { useDeleteShop, useFetchShops } from "@/app/_hooks/ShopHooks";
 
-const items = [
-  {
-    id: 1,
-    name: "Fashion Fiesta",
-    description: "Your tech paradise.",
-    status: "Active",
-    logo: "/shop-1.jpg",
-  },
-  {
-    id: 2,
-    name: "Fashion Fiesta",
-    description: "Your tech paradise.",
-    status: "Active",
-    logo: "/shop-1.jpg",
-  },
-  {
-    id: 3,
-    name: "Fashion Fiesta",
-    description: "Your tech paradise.",
-    status: "Active",
-    logo: "/shop-1.jpg",
-  },
-  {
-    id: 4,
-    name: "Fashion Fiesta",
-    description: "Your tech paradise.",
-    status: "Active",
-    logo: "/shop-1.jpg",
-  },
-  {
-    id: 5,
-    name: "Fashion Fiesta",
-    description:
-      "Your tech paradise.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
-    status: "Active",
-    logo: "/shop-1.jpg",
-  },
-];
-
-const ShopList = ({ shops = [] }) => {
+const ShopList = ({ initialShops }) => {
+  const { shops } = useFetchShops();
+  const { deleteShop } = useDeleteShop();
   return (
     <Card.Root p={4} boxShadow="xl">
       <Box textAlign="end" mb={4}>
@@ -92,23 +57,26 @@ const ShopList = ({ shops = [] }) => {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {shops.map((item, index) => {
-              const status = item.products.length > 0 ? "Active" : "Inactive";
+            {shops?.map((item, index) => {
+              // const status = item.products.length > 0 ? "Active" : "Inactive";
               return (
                 <Table.Row key={item.id}>
                   <Table.Cell>{index + 1}</Table.Cell>
-                  <Table.Cell>{item.name}</Table.Cell>
+                  <Table.Cell>{item.shopName}</Table.Cell>
                   <Table.Cell
                     maxWidth="300px"
                     whiteSpace="nowrap"
                     overflow="hidden"
                     textOverflow="ellipsis"
                   >
-                    {item.description}
+                    {item.shopDescription}
                   </Table.Cell>
                   <Table.Cell textAlign="end">
-                    <Badge colorPalette={status === "Active" ? "green" : "red"}>
-                      {status}
+                    <Badge
+                      colorPalette={item.status === "Active" ? "green" : "red"}
+                    >
+                      active
+                      {/* {item.status} */}
                     </Badge>
                   </Table.Cell>
                   <Table.Cell>
@@ -117,7 +85,7 @@ const ShopList = ({ shops = [] }) => {
                         src={item.logo}
                         width={40}
                         height={40}
-                        alt={item.name}
+                        alt={item.shopName}
                       />
                     </Flex>
                   </Table.Cell>
@@ -142,14 +110,14 @@ const ShopList = ({ shops = [] }) => {
                               src={item.logo}
                               width={400}
                               height={400}
-                              alt={item.name}
+                              alt={item.shopName}
                             />
                           </Text>
                           <Text>
-                            <b>Shop Name:</b> {item.name}
+                            <b>Shop Name:</b> {item.shopName}
                           </Text>
                           <Text>
-                            <b>Description: </b> {item.description}
+                            <b>Description: </b> {item.shopDescription}
                           </Text>
                         </Stack>
                       </ViewCard>
@@ -160,7 +128,7 @@ const ShopList = ({ shops = [] }) => {
                             <FaPencil size="1px" />
                           </IconButton>
                         }
-                        title={`Edit ${item.name}`}
+                        title={`Edit ${item.shopName}`}
                       >
                         <ShopForm shopDetailsToEdit={item} />
                       </ViewCard>
@@ -171,21 +139,24 @@ const ShopList = ({ shops = [] }) => {
                             <FaTrash size="1px" />
                           </IconButton>
                         }
-                        title={`Delete ${item.name} Shop`}
+                        title={`Delete ${item.shopName} Shop`}
                         footerActions={[
                           <Flex gap={2} key={item.id}>
-                            <Button key="close" variant="outline">
-                              Close
-                            </Button>
-                            <Button key="close" colorPalette="red">
+                            <Button variant="outline">Close</Button>
+                            <Button
+                              colorPalette="red"
+                              onClick={() => {
+                                deleteShop(item.id);
+                              }}
+                            >
                               Delete
                             </Button>
                           </Flex>,
                         ]}
                       >
                         <Text>
-                          Are you sure you want to delete {` ${item.name}`}?This
-                          action cannot be undone.
+                          Are you sure you want to delete {` ${item.shopName}`}
+                          ?This action cannot be undone.
                         </Text>
                       </ViewCard>
                     </Flex>
@@ -195,7 +166,9 @@ const ShopList = ({ shops = [] }) => {
             })}
           </Table.Body>
           <Table.Footer>
-            <Pagination />
+            <Table.Row>
+              <Pagination />
+            </Table.Row>
           </Table.Footer>
         </Table.Root>
       </Table.ScrollArea>
