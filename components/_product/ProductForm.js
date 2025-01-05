@@ -6,9 +6,9 @@ import UploadButton from "../UploadButton";
 import SelectContainer from "../SelectContainer";
 import { useFetchShops } from "@/app/_hooks/ShopHooks";
 import { useForm } from "react-hook-form";
-import { useAddProduct } from "@/app/_hooks/ProductsHooks";
+import { useAddProduct, useUpdateProduct } from "@/app/_hooks/ProductsHooks";
 
-const ProductForm = ({ productDetailsToEdit, handleClose }) => {
+const ProductForm = ({ productDetailsToEdit = {}, handleClose }) => {
   const { shops } = useFetchShops();
   const { id: editId, ...editValues } = productDetailsToEdit;
 
@@ -18,19 +18,34 @@ const ProductForm = ({ productDetailsToEdit, handleClose }) => {
     defaultValues: isEditSession ? editValues : {},
   });
   const { addNewProduct } = useAddProduct();
+  const { updateProduct } = useUpdateProduct();
 
   // handle form submission
   const handleOnSubmit = (data) => {
     const image = typeof data.image === "string" ? data.image : data.image[0];
-    addNewProduct(
-      { ...data, image: image },
-      {
-        onSuccess: () => {
-          reset();
-          handleClose();
-        },
-      }
-    );
+
+    if (isEditSession) {
+      updateProduct(
+        { updateProductData: { ...data, image: image }, id: editId },
+        {
+          onSuccess: () => {
+            reset();
+            handleClose();
+          },
+        }
+      );
+    } else {
+      addNewProduct(
+        { ...data, image: image },
+        {
+          onSuccess: () => {
+            reset();
+            handleClose();
+          },
+        }
+      );
+    }
+
     console.log(data, "data from form");
   };
 
@@ -60,7 +75,7 @@ const ProductForm = ({ productDetailsToEdit, handleClose }) => {
             register={register("shopName")}
           />
         </Field>
-        <Field required label="Product Image">
+        <Field required={!isEditSession} label="Product Image">
           <UploadButton {...register("image")} />
         </Field>
         <Box textAlign={{ base: "center", md: "right" }}>
@@ -80,7 +95,7 @@ const ProductForm = ({ productDetailsToEdit, handleClose }) => {
             gradientTo="#20c997"
             type="submit"
           >
-            Submit
+            {isEditSession ? "Update" : "Add"} Product
           </Button>
         </Box>
       </Flex>
