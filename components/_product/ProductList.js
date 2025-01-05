@@ -84,6 +84,7 @@ const ProductList = () => {
         >
           <ProductForm />
         </ViewCard>
+        <Text>Filter component</Text>
       </Box>
 
       <Table.ScrollArea>
@@ -203,7 +204,9 @@ const ProductList = () => {
             ))}
           </Table.Body>
           <Table.Footer>
-            <Pagination />
+            <Table.Row>
+              <Pagination />
+            </Table.Row>
           </Table.Footer>
         </Table.Root>
       </Table.ScrollArea>

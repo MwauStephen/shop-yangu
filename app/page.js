@@ -1,5 +1,5 @@
 "use client";
-import { Card, CardBody, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import React from "react";
 import { Box } from "@chakra-ui/react";
 import StockGraph from "@/components/_dashboard/StockGraph";
@@ -27,8 +27,9 @@ const HomePage = () => {
       </Box>
 
       <Box as="section" my={8}>
-        <ShopList shops={shops} />
+        <ShopList initialShops={shops} />
       </Box>
+
       <Box as="section" my={8}>
         <ProductList />
       </Box>
