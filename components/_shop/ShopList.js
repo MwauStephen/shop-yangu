@@ -17,10 +17,21 @@ import ViewCard from "../ViewCard";
 import Image from "next/image";
 import ShopForm from "./ShopForm";
 import { useDeleteShop, useFetchShops } from "@/app/_hooks/ShopHooks";
+import Empty from "../Empty";
 
-const ShopList = ({ initialShops }) => {
+const ShopList = () => {
   const { shops } = useFetchShops();
   const { deleteShop } = useDeleteShop();
+
+  if (shops.length === 0)
+    return (
+      <Empty
+        title="No shops found.Please add a shop."
+        action="Add Shop"
+        path="shops/create"
+      />
+    );
+
   return (
     <Card.Root p={4} boxShadow="xl">
       <Box textAlign="end" mb={4}>
