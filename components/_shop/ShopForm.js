@@ -5,11 +5,13 @@ import UploadButton from "../UploadButton";
 import { Button } from "../ui/button";
 import { useForm } from "react-hook-form";
 import { useAddShop } from "@/app/_hooks/ShopHooks";
+import { useUpdateShop } from "@/app/_hooks/ShopHooks";
 
 const ShopForm = ({ shopDetailsToEdit = {}, handleClose }) => {
   const { id: editId, ...editValues } = shopDetailsToEdit;
   const isEditSession = Boolean(editId);
   const { addNewShop } = useAddShop();
+  const { updateShop } = useUpdateShop();
 
   const { register, formState, reset, handleSubmit } = useForm({
     defaultValues: isEditSession ? editValues : {},
@@ -19,15 +21,27 @@ const ShopForm = ({ shopDetailsToEdit = {}, handleClose }) => {
   const handleOnSubmit = async (data) => {
     const image = typeof data.logo === "string" ? data.logo : data.logo[0];
     console.log(data, "data from form");
-    addNewShop(
-      { ...data, logo: image },
-      {
-        onSuccess: () => {
-          reset();
-          handleClose();
-        },
-      }
-    );
+    if (isEditSession) {
+      updateShop(
+        { updateShopData: { ...data, logo: image }, id: editId },
+        {
+          onSuccess: () => {
+            reset();
+            handleClose();
+          },
+        }
+      );
+    } else {
+      addNewShop(
+        { ...data, logo: image },
+        {
+          onSuccess: () => {
+            reset();
+            handleClose();
+          },
+        }
+      );
+    }
   };
 
   return (
