@@ -82,7 +82,7 @@ const ShopForm = ({ shopDetailsToEdit = {}, handleClose }) => {
             gradientTo="#20c997"
             type="submit"
           >
-            Submit
+            {isEditSession ? "Update Shop" : "Add Shop"}
           </Button>
         </Box>
       </Flex>
