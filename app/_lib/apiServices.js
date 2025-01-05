@@ -280,4 +280,49 @@ export const getProductSummary = async () => {
   return { totalValue, totalStockLevel };
 };
 
+// 6.api function for calculating the total stock stats
+export const getStockStats = async () => {
+  // fetch data from products and shops table
+  const { data, error } = await supabase
+    .from("products")
+    .select("*,shops(shopName)")
+    .order("stockLevel", { ascending: false });
 
+  if (error)
+    throw new Error(`Product details couldn't be fetched. ${error.message}`);
+  // Calculate stock status distribution
+  const stockStatusDistribution = {
+    instock: 0,
+    outOfStock: 0,
+    lowStock: 0,
+  };
+
+  // Initialize Shop Stock Levels: An object that will store the total stock level for each shop.
+  const shopStockLevels = {};
+
+  // loop through the products data
+  data.forEach((product) => {
+    if (product.stockLevel > 5) {
+      stockStatusDistribution.instock += 1;
+    } else if (product.stockLevel === 0) {
+      stockStatusDistribution.outOfStock += 1;
+    } else {
+      stockStatusDistribution.lowStock += 1;
+    }
+
+    // For each product, the shopStockLevels object is updated to include the shopName and accumulate the totalStock for each shop.
+    if (!shopStockLevels[product.shopId]) {
+      shopStockLevels[product.shopId] = {
+        shopName: product.shops.shopName,
+        totalStock: 0,
+      };
+      shopStockLevels[product.shopId].totalStock += product.stockLevel;
+    }
+  });
+  // Get top 5 shops by stock level
+  const topShops = Object.values(shopStockLevels)
+    .sort((a, b) => b.totalStock - a.totalStock)
+    .slice(0, 5);
+
+  return { stockStatusDistribution, topShops };
+};
