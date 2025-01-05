@@ -1,8 +1,9 @@
 import React from "react";
 
-const SelectContainer = ({ data }) => {
+const SelectContainer = ({ data, register }) => {
   return (
     <select
+      {...register}
       style={{
         width: "100%",
         padding: "0.5rem",
