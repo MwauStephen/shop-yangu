@@ -23,7 +23,7 @@ const ShopList = () => {
   const { shops } = useFetchShops();
   const { deleteShop } = useDeleteShop();
 
-  if (shops.length === 0)
+  if (shops?.length === 0)
     return (
       <Empty
         title="No shops found.Please add a shop."

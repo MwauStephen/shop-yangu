@@ -16,7 +16,7 @@ import ProductForm from "./ProductForm";
 import ViewCard from "../ViewCard";
 import { useDeleteProduct, useFetchProducts } from "@/app/_hooks/ProductsHooks";
 import Empty from "../Empty";
-import Link from "next/link";
+import { formatCurrency } from "@/app/_utils/helpers";
 
 const items = [
   {
@@ -133,7 +133,7 @@ const ProductList = () => {
                 >
                   {product.productDescription}
                 </Table.Cell>
-                <Table.Cell>{product.price}</Table.Cell>
+                <Table.Cell>formatCurrency({product.price})</Table.Cell>
                 <Table.Cell textAlign="end">{product.stockLevel}</Table.Cell>
                 <Table.Cell textAlign="end">
                   <Flex justifyContent="flex-end">
