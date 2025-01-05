@@ -120,21 +120,41 @@ export const getAllProducts = async () => {
 };
 // 2.api function for adding a new product
 export const addProduct = async (product) => {
-  // Checks if image is present in supabase upon adding
-  const hasImagePath = product.image?.startsWith?.(supabaseUrl);
+  // 1.Extract shop name from product data since it is not needed in the product table but we need the shop id
+  const { shopName, ...extractedProductData } = product;
 
-  const imageName = `${Math.random()}-${product.image.name}`.replace(" /", "");
+  // query shop table to get the shop id
+  const { data: shopData, error: shopError } = await supabase
+    .from("shops")
+    .select("*")
+    .eq("shopName", shopName)
+    .single();
+
+  if (shopError)
+    throw new Error(`Shop details couldn't be fetched.${shopError.message}`);
+
+  // get shop id
+  const shopId = shopData.id;
+
+  // Checks if image is present in supabase upon adding
+  const hasImagePath = extractedProductData.image?.startsWith?.(supabaseUrl);
+
+  const imageName = `${Math.random()}-${
+    extractedProductData.image.name
+  }`.replace(" /", "");
   const imagePath = hasImagePath
-    ? product.image
+    ? extractedProductData.image
     : `${supabaseUrl}/storage/v1/object/public/products/${imageName}`;
 
   // 1.create a shop
   let query = supabase.from("products");
 
   // 1a) Creates new shop
-  query = query.insert([{ ...product, image: imagePath }]);
+  query = query.insert([{ ...extractedProductData, image: imagePath, shopId }]);
 
   const { data, error } = await query.select().single();
+
+  console.log(data, "data from api function");
 
   if (error) {
     console.log(error);
@@ -147,7 +167,7 @@ export const addProduct = async (product) => {
   // 2.Upload the product image
   const { error: storageError } = await supabase.storage
     .from("products")
-    .upload(imageName, product.image);
+    .upload(imageName, extractedProductData.image);
 
   // 3.Prevent a new product from being created if there is an error uploading the image(Delete the shop)
   if (storageError) {
@@ -161,12 +181,30 @@ export const addProduct = async (product) => {
 };
 // 3.api function for updating a product
 export const updateProduct = async (product, id) => {
-  // Checks if image is present in supabase upon editing
-  const hasImagePath = product.image?.startsWith?.(supabaseUrl);
+  // 1.Extract shop name from product data since it is not needed in the product table but we need the shop id
+  const { shopName, ...extractedProductData } = product;
 
-  const imageName = `${Math.random()}-${product.image.name}`.replace(" /", "");
+  // query shop table to get the shop id
+  const { data: shopData, error: shopError } = await supabase
+    .from("shops")
+    .select("*")
+    .eq("shopName", shopName)
+    .single();
+
+  if (shopError)
+    throw new Error(`Shop details couldn't be fetched.${shopError.message}`);
+
+  // get shop id
+  const shopId = shopData.id;
+
+  // Checks if image is present in supabase upon editing
+  const hasImagePath = extractedProductData.image?.startsWith?.(supabaseUrl);
+
+  const imageName = `${Math.random()}-${
+    extractedProductData.image.name
+  }`.replace(" /", "");
   const imagePath = hasImagePath
-    ? product.image
+    ? extractedProductData.image
     : `${supabaseUrl}/storage/v1/object/public/products/${imageName}`;
 
   let query = supabase.from("products");
@@ -174,12 +212,14 @@ export const updateProduct = async (product, id) => {
   // 1b) edits shop
   if (id) {
     query = query
-      .update({ ...product, image: imagePath })
+      .update({ ...extractedProductData, image: imagePath, shopId })
       .eq("id", id)
       .select();
   }
 
   const { data, error } = await query.select().single();
+
+  console.log(data, "data from update api function");
 
   if (error) {
     console.log(error);
@@ -192,7 +232,7 @@ export const updateProduct = async (product, id) => {
   // 2.Upload the cabin image
   const { error: storageError } = await supabase.storage
     .from("products")
-    .upload(imageName, product.image);
+    .upload(imageName, extractedProductData.image);
 
   // 3.Prevent a new product from being created if there is an error uploading the image(Delete the product)
   if (storageError) {
@@ -206,7 +246,7 @@ export const updateProduct = async (product, id) => {
 };
 // 4.api function for deleting a product
 export const deleteProduct = async (id) => {
-  const { data, error } = await supabase.from("products").delete().eq({ id });
+  const { data, error } = await supabase.from("products").delete().eq("id", id);
   if (error) throw new Error(error.message);
   return data;
 };
