@@ -7,17 +7,15 @@ import {
 import { HiUpload } from "react-icons/hi";
 import { Button } from "./ui/button";
 
-const UploadButton = forwardRef(({ ...rest }, ref) => (
+const UploadButton = forwardRef(({ required, ...rest }, ref) => (
   <FileUploadRoot ref={ref} {...rest}>
     <FileUploadTrigger asChild>
       <Button variant="outline" size="sm">
         <HiUpload /> Upload file
       </Button>
     </FileUploadTrigger>
-    <FileUploadList />
+    <FileUploadList required={required} />
   </FileUploadRoot>
 ));
 UploadButton.displayName = "UploadButton";
 export default UploadButton;
-
-
