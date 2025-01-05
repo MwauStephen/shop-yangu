@@ -20,7 +20,7 @@ const ShopForm = ({ shopDetailsToEdit = {}, handleClose }) => {
   // handle form submission
   const handleOnSubmit = async (data) => {
     const image = typeof data.logo === "string" ? data.logo : data.logo[0];
-    console.log(data, "data from form");
+    // console.log(data, "data from form");
     if (isEditSession) {
       updateShop(
         { updateShopData: { ...data, logo: image }, id: editId },
@@ -61,7 +61,7 @@ const ShopForm = ({ shopDetailsToEdit = {}, handleClose }) => {
             {...register("shopDescription")}
           />
         </Field>
-        <Field required label="Shop Logo">
+        <Field required={!isEditSession} label="Shop Logo">
           <UploadButton {...register("logo")} />
         </Field>
         <Box textAlign={{ base: "center", md: "right" }}>
