@@ -1,10 +1,11 @@
-import { toaster } from "@/components/ui/toaster";
 import {
   addProduct,
   getAllProducts,
+  deleteProduct as deleteProductApi,
   updateProduct as updateProductApi,
 } from "../_lib/apiServices";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 // all products custom hooks
 export const useFetchProducts = () => {
@@ -23,19 +24,11 @@ export const useAddProduct = () => {
   const { mutate: addNewProduct, isLoading } = useMutation({
     mutationFn: (product) => addProduct(product),
     onSuccess: () => {
+      toast.success("Product added successfully");
       queryClient.invalidateQueries(["products"]);
-      toaster.create({
-        title: "Product added successfully",
-        type: "success",
-        placement: "top-center",
-      });
     },
     onError: (error) => {
-      toaster.create({
-        title: `Product could not be added.${error.message}`,
-        type: "error",
-        placement: "top-center",
-      });
+      toast.error(`Product could not be added.${error.message}`);
     },
   });
   return { addNewProduct, isLoading };
@@ -43,21 +36,14 @@ export const useAddProduct = () => {
 export const useUpdateProduct = () => {
   const queryClient = useQueryClient();
   const { mutate: updateProduct, isLoading } = useMutation({
-    mutationFn: ({ product, id }) => updateProductApi(product, id),
+    mutationFn: ({ updateProductData, id }) =>
+      updateProductApi(updateProductData, id),
     onSuccess: () => {
+      toast.success("Product updated successfully");
       queryClient.invalidateQueries(["products"]);
-      toaster.create({
-        title: "Product updated successfully",
-        type: "success",
-        placement: "top-center",
-      });
     },
     onError: (error) => {
-      toaster.create({
-        title: `Product could not be updated.${error.message}`,
-        type: "error",
-        placement: "top-center",
-      });
+      toast.error(`Product could not be updated.${error.message}`);
     },
   });
   return { updateProduct, isLoading };
@@ -67,19 +53,11 @@ export const useDeleteProduct = () => {
   const { mutate: deleteProduct, isLoading } = useMutation({
     mutationFn: (id) => deleteProductApi(id),
     onSuccess: () => {
+      toast.success("Product deleted successfully");
       queryClient.invalidateQueries(["products"]);
-      toaster.create({
-        title: "Product deleted successfully",
-        type: "success",
-        placement: "top-center",
-      });
     },
     onError: (error) => {
-      toaster.create({
-        title: `Product could not be deleted.${error.message}`,
-        type: "error",
-        placement: "top-center",
-      });
+      toast.error(`Product could not be deleted.${error.message}`);
     },
   });
   return { deleteProduct, isLoading };
