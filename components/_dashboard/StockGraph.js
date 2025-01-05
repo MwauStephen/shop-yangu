@@ -121,7 +121,7 @@ const StockGraph = () => {
               const stockStatus = stockData.find(
                 (item) => item.status === value
               );
-              console.log("stockStatus", stockStatus);
+              // console.log("stockStatus", stockStatus);
               return (
                 <span
                   style={{
