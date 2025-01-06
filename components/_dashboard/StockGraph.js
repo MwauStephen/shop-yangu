@@ -1,13 +1,17 @@
+import { useFetchStockStatus } from "@/app/_hooks/ProductsHooks";
 import { Card, Text, useTheme } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { PieChart, Pie, Sector, ResponsiveContainer, Legend } from "recharts";
+import LoadingSpinner from "../LoadingSpinner";
+import toast from "react-hot-toast";
+import Empty from "../Empty";
 
-//  dynamic data from your project categories:displays as default
-const stockData = [
-  { status: "In Stock", count: 30 }, // Products with stock > 5
-  { status: "Low Stock", count: 12 }, // Products with stock between 1 and 5
-  { status: "Out of Stock", count: 8 }, // Products with stock = 0
-];
+// dummy dynamic data from your project categories:displays as default
+// const stockData = [
+//   { status: "In Stock", count: 30 }, // Products with stock > 5
+//   { status: "Low Stock", count: 12 }, // Products with stock between 1 and 5
+//   { status: "Out of Stock", count: 8 }, // Products with stock = 0
+// ];
 
 // Custom active shape renderer
 const renderActiveShape = (props) => {
@@ -87,6 +91,29 @@ const renderActiveShape = (props) => {
 
 const StockGraph = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const { data, isLoading, error } = useFetchStockStatus();
+
+  if (isLoading) return <LoadingSpinner />;
+
+  if (error) return toast.error("An error occurred. Please try again.");
+
+  // display an empty state if there are no products
+  if (
+    data.stockStatusDistribution.instock === 0 &&
+    data.stockStatusDistribution.lowStock === 0 &&
+    data.stockStatusDistribution.outOfStock === 0
+  ) {
+    return <Empty title="No stock status" action="" path="products/create" />;
+  }
+
+  const stockData = [
+    { status: "In Stock", count: data.stockStatusDistribution.instock || 0 }, // Products with stock > 5
+    { status: "Low Stock", count: data.stockStatusDistribution.lowStock || 0 }, // Products with stock between 1 and 5
+    {
+      status: "Out of Stock",
+      count: data.stockStatusDistribution.outOfStock || 0,
+    }, // Products with stock = 0
+  ];
 
   const onPieEnter = (_, index) => {
     setActiveIndex(index);
