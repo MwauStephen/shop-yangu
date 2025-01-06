@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 // custom hooks for shops
 export const useFetchShops = () => {
   const {
-    data: shops,
+    data: { data: shops, count } = {},
     error,
     isLoading,
   } = useQuery({
@@ -18,7 +18,7 @@ export const useFetchShops = () => {
     queryFn: () => getAllShops(),
   });
 
-  return { shops, error, isLoading };
+  return { shops, error, isLoading, count };
 };
 
 export const useAddShop = () => {
@@ -58,7 +58,7 @@ export const useUpdateShop = () => {
 };
 export const useDeleteShop = () => {
   const queryClient = useQueryClient();
-  
+
   const { mutate: deleteShop, isLoading } = useMutation({
     mutationFn: (id) => deleteShopApi(id),
     onSuccess: () => {

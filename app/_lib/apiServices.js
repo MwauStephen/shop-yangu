@@ -281,7 +281,7 @@ export const getProductSummary = async () => {
 };
 
 // 6.api function for calculating the total stock stats
-export const getStockStats = async () => {
+export const getStockStatus = async () => {
   // fetch data from products and shops table
   const { data, error } = await supabase
     .from("products")
