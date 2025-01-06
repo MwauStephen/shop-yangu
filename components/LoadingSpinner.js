@@ -1,8 +1,12 @@
 import React from "react";
-import { Spinner } from "@chakra-ui/react";
+import { Spinner, VStack } from "@chakra-ui/react";
 
 const LoadingSpinner = () => {
-  return <Spinner size="xl" />;
+  return (
+    <VStack mx="auto" my={8}>
+      <Spinner size="xl" color="#20c997" />;
+    </VStack>
+  );
 };
 
 export default LoadingSpinner;
