@@ -4,6 +4,7 @@ import {
   deleteProduct as deleteProductApi,
   updateProduct as updateProductApi,
   getProductSummary,
+  getStockStatus,
 } from "../_lib/apiServices";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
@@ -71,4 +72,13 @@ export const useProductSummary = () => {
   });
   const { totalValue = 0, totalStockLevel = 0 } = data;
   return { totalValue, totalStockLevel, error };
+};
+
+export const useFetchStockStatus = () => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["stockStatus"],
+    queryFn: getStockStatus,
+  });
+
+  return { data, error, isLoading };
 };
