@@ -1,4 +1,5 @@
 "use client";
+import { useFetchStockStatus } from "@/app/_hooks/ProductsHooks";
 import { Card, Text } from "@chakra-ui/react";
 import {
   BarChart,
@@ -9,18 +10,29 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts";
+import Empty from "../Empty";
+import LoadingSpinner from "../LoadingSpinner";
 
 const COLORS = ["#8884d8", "#82ca9d", "#ffc658", "#d0ed57", "#a4de6c"];
 
-const topShopsData = [
-  { shopName: "Shop A", stock: 120 },
-  { shopName: "Shop B", stock: 95 },
-  { shopName: "Shop C", stock: 80 },
-  { shopName: "Shop D", stock: 75 },
-  { shopName: "Shop E", stock: 60 },
-];
+// // dummy data
+// const topShopsDataDummy = [
+//   { shopName: "Shop A", stock: 120 },
+//   { shopName: "Shop B", stock: 95 },
+//   { shopName: "Shop C", stock: 80 },
+//   { shopName: "Shop D", stock: 75 },
+//   { shopName: "Shop E", stock: 60 },
+// ];
 
 const TopShops = () => {
+  const { data, isLoading } = useFetchStockStatus();
+  const topShopsData = data?.topShops || [];
+
+  if (isLoading) return <LoadingSpinner />;
+
+  if (topShopsData.length === 0)
+    return <Empty title="No top shops data" path="shop/create" />;
+
   return (
     <Card.Root flex="0 0 50%" p={4} boxShadow="xl">
       <Text as="h3" fontWeight="bold" textAlign="center" mb={4}>
