@@ -12,10 +12,8 @@ import { formatCurrency } from "@/app/_utils/helpers";
 const Metrics = () => {
   const { count: shopCount } = useFetchShops();
   const { count: productCount } = useFetchProducts();
-
   const { totalValue, totalStockLevel } = useProductSummary();
 
-  console.log(totalValue, totalStockLevel, "total value and stock level");
   return (
     <Grid templateColumns="repeat(auto-fit, minmax(200px, 1fr))" gap={4}>
       <GridItem>
