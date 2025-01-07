@@ -12,7 +12,7 @@ const SelectContainer = ({ data, register }) => {
         fontSize: "0.8rem",
       }}
     >
-      {data.map((item, index) => {
+      {data?.map((item, index) => {
         return (
           <option
             value={item.shopName}
