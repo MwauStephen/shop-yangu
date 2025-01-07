@@ -95,10 +95,11 @@ const ShopList = () => {
                   </Table.Cell>
                   <Table.Cell textAlign="end">
                     <Badge
-                      colorPalette={item.status === "Active" ? "green" : "red"}
+                      colorPalette={
+                        item.shopStatus === "Active" ? "green" : "red"
+                      }
                     >
-                      active
-                      {/* {item.status} */}
+                      {item.shopStatus}
                     </Badge>
                   </Table.Cell>
                   <Table.Cell>
