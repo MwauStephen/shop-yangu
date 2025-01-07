@@ -17,61 +17,15 @@ import ViewCard from "../ViewCard";
 import { useDeleteProduct, useFetchProducts } from "@/app/_hooks/ProductsHooks";
 import Empty from "../Empty";
 import { formatCurrency } from "@/app/_utils/helpers";
-
-const items = [
-  {
-    id: 1,
-    name: "Fashion Fiesta",
-    description: "Your tech paradise.",
-    price: "Ksh 500.",
-    stock: 30,
-    image: "/shop-1.jpg",
-  },
-  {
-    id: 2,
-    name: "Fashion Fiesta",
-    description: "Your tech paradise.",
-    price: "Ksh 500.",
-    stock: 30,
-    image: "/shop-1.jpg",
-  },
-  {
-    id: 3,
-    name: "Fashion Fiesta",
-    description: "Your tech paradise.",
-    price: "Ksh 500.",
-    stock: 30,
-    image: "/shop-1.jpg",
-  },
-  {
-    id: 4,
-    name: "Fashion Fiesta",
-    description: "Your tech paradise.",
-    price: "Ksh 500.",
-    stock: 30,
-    image: "/shop-1.jpg",
-  },
-  {
-    id: 5,
-    name: "Fashion Fiesta",
-    description: "Your tech paradise.",
-    price: "Ksh 500.",
-    stock: 30,
-    image: "/shop-1.jpg",
-  },
-  {
-    id: 6,
-    name: "Fashion Fiesta",
-    description: "Your tech paradise.",
-    price: "Ksh 500.",
-    stock: 30,
-    image: "/shop-1.jpg",
-  },
-];
+import { ITEMS_PER_PAGE } from "@/app/_utils/constants";
+import LoadingSpinner from "../LoadingSpinner";
 
 const ProductList = () => {
-  const { products } = useFetchProducts();
+  const { products, count, currentPage, setCurrentPage, isLoading } =
+    useFetchProducts();
   const { deleteProduct } = useDeleteProduct();
+
+  if (isLoading) return <LoadingSpinner />;
 
   if (products?.length === 0)
     return (
@@ -81,6 +35,11 @@ const ProductList = () => {
         path="products/create"
       />
     );
+
+  // handler function to handle pagination
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
   return (
     <Card.Root p={4} boxShadow="xl">
       <Box textAlign="end" mb={4}>
@@ -98,7 +57,6 @@ const ProductList = () => {
         >
           <ProductForm />
         </ViewCard>
-        <Text>Filter component</Text>
       </Box>
 
       <Table.ScrollArea>
@@ -133,7 +91,7 @@ const ProductList = () => {
                 >
                   {product.productDescription}
                 </Table.Cell>
-                <Table.Cell>formatCurrency({product.price})</Table.Cell>
+                <Table.Cell>{formatCurrency(product.price)}</Table.Cell>
                 <Table.Cell textAlign="end">{product.stockLevel}</Table.Cell>
                 <Table.Cell textAlign="end">
                   <Flex justifyContent="flex-end">
@@ -161,14 +119,14 @@ const ProductList = () => {
                       ]}
                     >
                       <Stack spacing={4}>
-                        <Text>
+                        <Box mx="auto">
                           <Image
                             src={product.image}
-                            width={400}
-                            height={400}
+                            width={250}
+                            height={250}
                             alt={product.productName}
                           />
-                        </Text>
+                        </Box>
                         <Text>
                           <b>Product Name:</b> {product.productName}
                         </Text>
@@ -224,7 +182,12 @@ const ProductList = () => {
           </Table.Body>
           <Table.Footer>
             <Table.Row>
-              <Pagination />
+              <Pagination
+                count={count}
+                pageSize={ITEMS_PER_PAGE}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+              />
             </Table.Row>
           </Table.Footer>
         </Table.Root>
