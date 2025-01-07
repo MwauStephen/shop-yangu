@@ -45,7 +45,7 @@ export const addShop = async (shop) => {
   let query = supabase.from("shops");
 
   // 1a) Creates new shop
-  query = query.insert([{ ...shop, logo: imagePath }]);
+  query = query.insert([{ ...shop, logo: imagePath, shopStatus: "Inactive" }]);
 
   const { data, error } = await query.select().single();
 
@@ -123,12 +123,36 @@ export const updateShop = async (shop, id) => {
   return data;
 };
 // 4.api function for deleting a shop
-
 export const deleteShop = async (id) => {
+  // Check if the shop has active products
+  const { data: products, error: productsError } = await supabase
+    .from("products")
+    .select("id")
+    .eq("shopId", id);
+
+  if (productsError) {
+    throw new Error(`Could not check shop products. ${productsError.message}`);
+  }
+
+  if (products.length > 0) {
+    throw new Error(
+      "Cannot delete shop with active products. Please re-assign those products to another shop."
+    );
+  }
+
+  // Proceed with the deletion if no active products
   const { data, error } = await supabase.from("shops").delete().eq("id", id);
-  if (error) throw new Error(`Shop could not be deleted.${error.message}`);
+  if (error) {
+    throw new Error(`Shop could not be deleted. ${error.message}`);
+  }
   return data;
 };
+
+// export const deleteShop = async (id) => {
+//   const { data, error } = await supabase.from("shops").delete().eq("id", id);
+//   if (error) throw new Error(`Shop could not be deleted.${error.message}`);
+//   return data;
+// };
 
 // 1.api function for selecting all products
 // export const getAllProducts = async () => {
@@ -198,6 +222,16 @@ export const addProduct = async (product) => {
   if (error) {
     console.log(error);
     throw new Error("Products could not be created");
+  }
+
+  // Update the shop status to "Active" after assinging/adding a product to it
+  const { error: shopStatusError } = await supabase
+    .from("shops")
+    .update({ shopStatus: "Active" })
+    .eq("id", shopId);
+
+  if (shopStatusError) {
+    throw new Error(`Shop status could not be updated. ${shopError.message}`);
   }
 
   // If image has already a path i.e image has been uploaded  return data
