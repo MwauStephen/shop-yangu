@@ -18,9 +18,10 @@ import Image from "next/image";
 import ShopForm from "./ShopForm";
 import { useDeleteShop, useFetchShops } from "@/app/_hooks/ShopHooks";
 import Empty from "../Empty";
+import { ITEMS_PER_PAGE } from "@/app/_utils/constants";
 
 const ShopList = () => {
-  const { shops } = useFetchShops();
+  const { shops, count, currentPage, setCurrentPage } = useFetchShops();
   const { deleteShop } = useDeleteShop();
 
   if (shops?.length === 0)
@@ -31,6 +32,11 @@ const ShopList = () => {
         path="shops/create"
       />
     );
+
+  // handler function to handle pagination
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <Card.Root p={4} boxShadow="xl">
@@ -72,7 +78,8 @@ const ShopList = () => {
               // const status = item.products.length > 0 ? "Active" : "Inactive";
               return (
                 <Table.Row key={item.id}>
-                  <Table.Cell>{index + 1}</Table.Cell>
+                  <Table.Cell>{(currentPage - 1) * 5 + index + 1}</Table.Cell>
+                  {/* <Table.Cell>{index + 1}</Table.Cell> */}
                   <Table.Cell>{item.shopName}</Table.Cell>
                   <Table.Cell
                     maxWidth="300px"
@@ -178,7 +185,12 @@ const ShopList = () => {
           </Table.Body>
           <Table.Footer>
             <Table.Row>
-              <Pagination />
+              <Pagination
+                count={count}
+                pageSize={ITEMS_PER_PAGE}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+              />
             </Table.Row>
           </Table.Footer>
         </Table.Root>
