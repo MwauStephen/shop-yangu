@@ -79,11 +79,9 @@ const ShopList = () => {
           </Table.Header>
           <Table.Body>
             {shops?.map((item, index) => {
-              // const status = item.products.length > 0 ? "Active" : "Inactive";
               return (
                 <Table.Row key={item.id}>
                   <Table.Cell>{(currentPage - 1) * 5 + index + 1}</Table.Cell>
-                  {/* <Table.Cell>{index + 1}</Table.Cell> */}
                   <Table.Cell>{item.shopName}</Table.Cell>
                   <Table.Cell
                     maxWidth="300px"
