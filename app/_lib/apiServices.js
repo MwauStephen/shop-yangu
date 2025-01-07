@@ -354,7 +354,7 @@ export const getStockStatus = async () => {
       shopStockLevels[product.shopId].totalStock += product.stockLevel;
     }
   });
-  console.log(stockStatusDistribution, "stock distribution from api function");
+  // console.log(stockStatusDistribution, "stock distribution from api function");
   // Get top 5 shops by stock level
   const topShops = Object.values(shopStockLevels)
     .sort((a, b) => b.totalStock - a.totalStock)
