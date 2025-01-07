@@ -6,19 +6,33 @@ import {
   deleteShop as deleteShopApi,
 } from "../_lib/apiServices";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 // custom hooks for shops
-export const useFetchShops = () => {
+// export const useFetchShops = () => {
+//   const {
+//     data: { data: shops, count } = {},
+//     error,
+//     isLoading,
+//   } = useQuery({
+//     queryKey: ["shops"],
+//     queryFn: () => getAllShops(),
+//   });
+
+//   return { shops, error, isLoading, count };
+// };
+export const useFetchShops = (page = 1) => {
+  const [currentPage, setCurrentPage] = useState(page);
   const {
     data: { data: shops, count } = {},
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["shops"],
-    queryFn: () => getAllShops(),
+    queryKey: ["shops", currentPage],
+    queryFn: () => getAllShops(currentPage),
   });
 
-  return { shops, error, isLoading, count };
+  return { shops, error, isLoading, count, currentPage, setCurrentPage };
 };
 
 export const useAddShop = () => {

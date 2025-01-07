@@ -4,14 +4,15 @@ import ShopList from "@/components/_shop/ShopList";
 import { getAllShops } from "../_lib/apiServices";
 
 const ShopPage = async () => {
-  const shops = await getAllShops();
+  // const shops = await getAllShops();
   return (
     <Box as="section" p="2rem 1rem">
       <Text as="h1" fontWeight="bold" fontSize="1.2rem" mb={8}>
         Your Shop List
       </Text>
 
-      <ShopList initialShops={shops} />
+      <ShopList />
+      {/* <ShopList shops={shops} /> */}
     </Box>
   );
 };

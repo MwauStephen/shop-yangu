@@ -53,7 +53,7 @@ const SideNav = ({ isCollapsed, onCollapseToggle }) => {
       </Tooltip>
 
       <Tooltip content="Products" positioning={{ placement: "right-end" }}>
-        <Link href="products">
+        <Link href="/products">
           <Flex
             as="div"
             mb={4}

@@ -12,7 +12,8 @@ import { formatCurrency } from "@/app/_utils/helpers";
 const Metrics = () => {
   const { count: shopCount } = useFetchShops();
   const { count: productCount } = useFetchProducts();
-  const { totalValue, totalStockLevel } = useProductSummary();
+  const { data } = useProductSummary();
+  // const { totalValue, totalStockLevel } = useProductSummary();
 
   return (
     <Grid templateColumns="repeat(auto-fit, minmax(200px, 1fr))" gap={4}>
@@ -29,14 +30,16 @@ const Metrics = () => {
       <GridItem>
         <StatsCard
           title="Total Value"
-          value={formatCurrency(totalValue)}
+          value={formatCurrency(data?.totalValue)}
+          // value="100"
           icon={<FaDollarSign />}
         />
       </GridItem>
       <GridItem>
         <StatsCard
           title="Total Stock"
-          value={totalStockLevel}
+          value={data?.totalStockLevel}
+          // value="100"
           icon={<FaChartLine />}
         />
       </GridItem>

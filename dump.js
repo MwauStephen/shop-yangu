@@ -122,3 +122,54 @@
 
 //   return data;
 // };
+
+// const items = [
+//     {
+//       id: 1,
+//       name: "Fashion Fiesta",
+//       description: "Your tech paradise.",
+//       price: "Ksh 500.",
+//       stock: 30,
+//       image: "/shop-1.jpg",
+//     },
+//     {
+//       id: 2,
+//       name: "Fashion Fiesta",
+//       description: "Your tech paradise.",
+//       price: "Ksh 500.",
+//       stock: 30,
+//       image: "/shop-1.jpg",
+//     },
+//     {
+//       id: 3,
+//       name: "Fashion Fiesta",
+//       description: "Your tech paradise.",
+//       price: "Ksh 500.",
+//       stock: 30,
+//       image: "/shop-1.jpg",
+//     },
+//     {
+//       id: 4,
+//       name: "Fashion Fiesta",
+//       description: "Your tech paradise.",
+//       price: "Ksh 500.",
+//       stock: 30,
+//       image: "/shop-1.jpg",
+//     },
+//     {
+//       id: 5,
+//       name: "Fashion Fiesta",
+//       description: "Your tech paradise.",
+//       price: "Ksh 500.",
+//       stock: 30,
+//       image: "/shop-1.jpg",
+//     },
+//     {
+//       id: 6,
+//       name: "Fashion Fiesta",
+//       description: "Your tech paradise.",
+//       price: "Ksh 500.",
+//       stock: 30,
+//       image: "/shop-1.jpg",
+//     },
+//   ];

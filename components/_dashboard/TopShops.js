@@ -16,17 +16,18 @@ import LoadingSpinner from "../LoadingSpinner";
 const COLORS = ["#8884d8", "#82ca9d", "#ffc658", "#d0ed57", "#a4de6c"];
 
 // // dummy data
-// const topShopsDataDummy = [
-//   { shopName: "Shop A", stock: 120 },
-//   { shopName: "Shop B", stock: 95 },
-//   { shopName: "Shop C", stock: 80 },
-//   { shopName: "Shop D", stock: 75 },
-//   { shopName: "Shop E", stock: 60 },
-// ];
+const topShopsDataDummy = [
+  { shopName: "Shop A", totalStock: 120 },
+  { shopName: "Shop B", totalStock: 95 },
+  { shopName: "Shop C", totalStock: 80 },
+  { shopName: "Shop D", totalStock: 75 },
+  { shopName: "Shop E", totalStock: 60 },
+];
 
 const TopShops = () => {
   const { data, isLoading } = useFetchStockStatus();
-  const topShopsData = data?.topShops || [];
+  // console.log(data, "data from top shops");
+  const topShopsData = data?.topShops || topShopsDataDummy;
 
   if (isLoading) return <LoadingSpinner />;
 
@@ -47,7 +48,7 @@ const TopShops = () => {
           <XAxis type="number" />
           <YAxis type="category" dataKey="shopName" />
           <Tooltip />
-          <Bar dataKey="stock" fill="#20c997">
+          <Bar dataKey="totalStock" fill="#20c997">
             {topShopsData.map((entry, index) => (
               <Cell
                 key={`cell-${index}`}
