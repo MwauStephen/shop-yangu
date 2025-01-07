@@ -300,8 +300,20 @@ export const updateProduct = async (product, id) => {
   }
 
   // If image has already a path i.e image has been uploaded  return data
-  if (hasImagePath) return data;
+  // if (hasImagePath) return data;
+  if (hasImagePath) {
+    // Update the shop status to "Active"
+    const { error: shopStatusError } = await supabase
+      .from("shops")
+      .update({ shopStatus: "Active" })
+      .eq("id", shopId);
 
+    if (shopStatusError) {
+      throw new Error(
+        `Shop status could not be updated. ${shopStatusError.message}`
+      );
+    }
+  }
   // 2.Upload the cabin image
   const { error: storageError } = await supabase.storage
     .from("products")
