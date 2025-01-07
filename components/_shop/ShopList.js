@@ -19,10 +19,14 @@ import ShopForm from "./ShopForm";
 import { useDeleteShop, useFetchShops } from "@/app/_hooks/ShopHooks";
 import Empty from "../Empty";
 import { ITEMS_PER_PAGE } from "@/app/_utils/constants";
+import LoadingSpinner from "../LoadingSpinner";
 
 const ShopList = () => {
-  const { shops, count, currentPage, setCurrentPage } = useFetchShops();
+  const { shops, count, currentPage, setCurrentPage, isLoading } =
+    useFetchShops();
   const { deleteShop } = useDeleteShop();
+
+  if (isLoading) return <LoadingSpinner />;
 
   if (shops?.length === 0)
     return (
