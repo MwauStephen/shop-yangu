@@ -1,5 +1,5 @@
 "use client";
-import { Box, Card, Flex, Input, Text, Textarea } from "@chakra-ui/react";
+import { Box, Flex, Input, Textarea } from "@chakra-ui/react";
 import { Field } from "../ui/field";
 import { Button } from "../ui/button";
 import UploadButton from "../UploadButton";

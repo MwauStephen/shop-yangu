@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Text } from "@chakra-ui/react";
 import ShopList from "@/components/_shop/ShopList";
-import { getAllShops } from "../_lib/apiServices";
 
 const ShopPage = () => {
   return (
