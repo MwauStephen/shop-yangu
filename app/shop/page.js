@@ -3,8 +3,7 @@ import { Box, Text } from "@chakra-ui/react";
 import ShopList from "@/components/_shop/ShopList";
 import { getAllShops } from "../_lib/apiServices";
 
-const ShopPage = async () => {
-  // const shops = await getAllShops();
+const ShopPage = () => {
   return (
     <Box as="section" p="2rem 1rem">
       <Text as="h1" fontWeight="bold" fontSize="1.2rem" mb={8}>
@@ -12,7 +11,6 @@ const ShopPage = async () => {
       </Text>
 
       <ShopList />
-      {/* <ShopList shops={shops} /> */}
     </Box>
   );
 };
