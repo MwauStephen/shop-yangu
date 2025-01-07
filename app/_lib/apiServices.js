@@ -1,19 +1,36 @@
 // api services for supabase
+import { ITEMS_PER_PAGE } from "../_utils/constants";
 import supabase, { supabaseUrl } from "./supabase";
 
 const shopImageUrl = `${supabaseUrl}/storage/v1/object/public/shop/`;
 const productImageUrl = `${supabaseUrl}/storage/v1/object/public/product/`;
 
 // 1.api function for selecting all shops
-export const getAllShops = async () => {
-  const { data, error, count } = await supabase
-    .from("shops")
-    .select("*", { count: "exact" });
+// export const getAllShops = async () => {
+//   const { data, error, count } = await supabase
+//     .from("shops")
+//     .select("*", { count: "exact" });
+//   if (error)
+//     throw new Error(`Shop details could not be fetched.${error.message}`);
+//   return { data, count };
+// };
+// 1b.api function for selecting all shops with operations(filter and pagination)
+export const getAllShops = async (page = 1) => {
+  let query = supabase.from("shops").select("*", { count: "exact" });
+
+  // pagination logic(server side pagination)
+  if (page) {
+    const from = (page - 1) * ITEMS_PER_PAGE;
+    const to = from + ITEMS_PER_PAGE - 1;
+    query = query.range(from, to);
+  }
+  const { data, error, count } = await query;
+
   if (error)
     throw new Error(`Shop details could not be fetched.${error.message}`);
+
   return { data, count };
 };
-
 // 2.api function for adding a new shop
 export const addShop = async (shop) => {
   // Checks if image is present in supabase upon adding
@@ -32,7 +49,7 @@ export const addShop = async (shop) => {
 
   const { data, error } = await query.select().single();
 
-  console.log(data, "data from api function");
+  // console.log(data, "data from api function");
 
   if (error) {
     console.log(error);
@@ -114,12 +131,30 @@ export const deleteShop = async (id) => {
 };
 
 // 1.api function for selecting all products
-export const getAllProducts = async () => {
-  const { data, error, count } = await supabase
-    .from("products")
-    .select("*", { count: "exact" });
+// export const getAllProducts = async () => {
+//   const { data, error, count } = await supabase
+//     .from("products")
+//     .select("*", { count: "exact" });
+//   if (error)
+//     throw new Error(`Product details couldn't be fetched.${error.message}`);
+//   return { data, count };
+// };
+
+// 1b.api function for selecting all products with operations(filter and pagination)
+export const getAllProducts = async (page = 1) => {
+  let query = supabase.from("products").select("*", { count: "exact" });
+
+  // pagination logic(server side pagination)
+  if (page) {
+    const from = (page - 1) * ITEMS_PER_PAGE;
+    const to = from + ITEMS_PER_PAGE - 1;
+    query = query.range(from, to);
+  }
+  const { data, error, count } = await query;
+
   if (error)
     throw new Error(`Product details couldn't be fetched.${error.message}`);
+
   return { data, count };
 };
 // 2.api function for adding a new product
@@ -158,7 +193,7 @@ export const addProduct = async (product) => {
 
   const { data, error } = await query.select().single();
 
-  console.log(data, "data from api function");
+  // console.log(data, "data from api function");
 
   if (error) {
     console.log(error);
@@ -223,7 +258,7 @@ export const updateProduct = async (product, id) => {
 
   const { data, error } = await query.select().single();
 
-  console.log(data, "data from update api function");
+  // console.log(data, "data from update api function");
 
   if (error) {
     console.log(error);
@@ -266,16 +301,16 @@ export const getProductSummary = async () => {
   const totalValue = data.reduce((acc, product) => {
     const productValue = product.price * product.stockLevel;
     return acc + productValue;
-  });
+  }, 0);
 
-  console.log(totalValue, "total value from api function");
+  // console.log(totalValue, "total value from api function");
 
   // caluclate total stock level (sum of all stock levels)
   const totalStockLevel = data.reduce((acc, product) => {
     return acc + product.stockLevel;
-  });
+  }, 0);
 
-  console.log(totalStockLevel, "total stock level from api function");
+  // console.log(totalStockLevel, "total stock level from api function");
 
   return { totalValue, totalStockLevel };
 };
@@ -319,6 +354,7 @@ export const getStockStatus = async () => {
       shopStockLevels[product.shopId].totalStock += product.stockLevel;
     }
   });
+  console.log(stockStatusDistribution, "stock distribution from api function");
   // Get top 5 shops by stock level
   const topShops = Object.values(shopStockLevels)
     .sort((a, b) => b.totalStock - a.totalStock)
