@@ -5,15 +5,6 @@ import supabase, { supabaseUrl } from "./supabase";
 const shopImageUrl = `${supabaseUrl}/storage/v1/object/public/shop/`;
 const productImageUrl = `${supabaseUrl}/storage/v1/object/public/product/`;
 
-// 1.api function for selecting all shops
-// export const getAllShops = async () => {
-//   const { data, error, count } = await supabase
-//     .from("shops")
-//     .select("*", { count: "exact" });
-//   if (error)
-//     throw new Error(`Shop details could not be fetched.${error.message}`);
-//   return { data, count };
-// };
 // 1b.api function for selecting all shops with operations(filter and pagination)
 export const getAllShops = async (page = 1) => {
   let query = supabase.from("shops").select("*", { count: "exact" });
@@ -122,7 +113,8 @@ export const updateShop = async (shop, id) => {
   }
   return data;
 };
-// 4.api function for deleting a shop
+
+// 4b.api function for deleting a shop by first checking if it has associated products
 export const deleteShop = async (id) => {
   // Check if the shop has active products
   const { data: products, error: productsError } = await supabase
@@ -147,22 +139,6 @@ export const deleteShop = async (id) => {
   }
   return data;
 };
-
-// export const deleteShop = async (id) => {
-//   const { data, error } = await supabase.from("shops").delete().eq("id", id);
-//   if (error) throw new Error(`Shop could not be deleted.${error.message}`);
-//   return data;
-// };
-
-// 1.api function for selecting all products
-// export const getAllProducts = async () => {
-//   const { data, error, count } = await supabase
-//     .from("products")
-//     .select("*", { count: "exact" });
-//   if (error)
-//     throw new Error(`Product details couldn't be fetched.${error.message}`);
-//   return { data, count };
-// };
 
 // 1b.api function for selecting all products with operations(filter and pagination)
 export const getAllProducts = async (page = 1) => {
@@ -329,10 +305,49 @@ export const updateProduct = async (product, id) => {
   }
   return data;
 };
-// 4.api function for deleting a product
+
+// 4b.Update the deleteProduct Function to Change the shopStatus to "Inactive" if No Products Remain
 export const deleteProduct = async (id) => {
+  // Get the shopId of the product to be deleted
+  const { data: product, error: productError } = await supabase
+    .from("products")
+    .select("shopId")
+    .eq("id", id)
+    .single();
+
+  if (productError) {
+    throw new Error(`Could not find product. ${productError.message}`);
+  }
+
+  // Delete the product
   const { data, error } = await supabase.from("products").delete().eq("id", id);
-  if (error) throw new Error(error.message);
+
+  if (error) {
+    throw new Error(`Product could not be deleted. ${error.message}`);
+  }
+
+  // Check if the shop has any remaining products
+  const { data: remainingProducts, error: remainingProductsError } =
+    await supabase.from("products").select("id").eq("shopId", product.shopId);
+
+  if (remainingProductsError) {
+    throw new Error(
+      `Could not check remaining products. ${remainingProductsError.message}`
+    );
+  }
+
+  if (remainingProducts.length === 0) {
+    // Update the shop status to "Inactive"
+    const { error: shopError } = await supabase
+      .from("shops")
+      .update({ shopStatus: "Inactive" })
+      .eq("id", product.shopId);
+
+    if (shopError) {
+      throw new Error(`Shop status could not be updated. ${shopError.message}`);
+    }
+  }
+
   return data;
 };
 
