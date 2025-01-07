@@ -173,3 +173,38 @@
 //       image: "/shop-1.jpg",
 //     },
 //   ];
+
+// api functions
+// 1.api function for selecting all shops
+// export const getAllShops = async () => {
+//   const { data, error, count } = await supabase
+//     .from("shops")
+//     .select("*", { count: "exact" });
+//   if (error)
+//     throw new Error(`Shop details could not be fetched.${error.message}`);
+//   return { data, count };
+// };
+
+// 4.api function for deleting a product
+// export const deleteProduct = async (id) => {
+//   const { data, error } = await supabase.from("products").delete().eq("id", id);
+//   if (error) throw new Error(error.message);
+//   return data;
+// };
+
+
+// export const deleteShop = async (id) => {
+//   const { data, error } = await supabase.from("shops").delete().eq("id", id);
+//   if (error) throw new Error(`Shop could not be deleted.${error.message}`);
+//   return data;
+// };
+
+// 1.api function for selecting all products
+// export const getAllProducts = async () => {
+//   const { data, error, count } = await supabase
+//     .from("products")
+//     .select("*", { count: "exact" });
+//   if (error)
+//     throw new Error(`Product details couldn't be fetched.${error.message}`);
+//   return { data, count };
+// };
