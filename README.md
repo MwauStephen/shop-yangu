@@ -1,5 +1,7 @@
 `Shop Yangu`
 
+## `NB:Project needs access to internet.You must have an internet connection.`
+
 ## Project Overview
 
 A growing e-commerce platform for managing all the shops and products listed on the platform.The goal of this project is to develop an efficient and user-friendly Admin Panel for ShopYangu.The admin panel has the following features
