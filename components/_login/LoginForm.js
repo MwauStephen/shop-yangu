@@ -16,6 +16,7 @@ const LoginForm = () => {
     console.log(email, password);
     e.preventDefault();
     if (email === "admin@example.com" && password === "admin") {
+      localStorage.setItem("isAuthenticated", "true");
       toast.success("Login successful");
       window.location.href = "/";
     } else {

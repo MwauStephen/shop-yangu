@@ -1,15 +1,14 @@
-"use client"; // Mark as Client Component
-
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { Provider } from "@/components/ui/provider";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Roboto } from "next/font/google";
 import QueryProvider from "@/components/QueryProvider";
 import ToastContainer from "@/components/ToastContainer";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { metadata } from "@/metadata";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
-// loading fonts
 const roboto = Roboto({
   display: "swap",
   weight: "400",
@@ -18,6 +17,20 @@ const roboto = Roboto({
 
 const RootLayout = ({ children }) => {
   const pathname = usePathname();
+  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // Check authentication status
+    const authStatus = localStorage.getItem("isAuthenticated");
+    setIsAuthenticated(authStatus === "true");
+
+    // Redirect unauthenticated users trying to access protected pages
+    const protectedPaths = ["/", "/shops", "/products"]; // Add your protected routes here
+    if (!authStatus && protectedPaths.includes(pathname)) {
+      window.location.href = "/login"; // Redirect to login page
+    }
+  }, [pathname]);
 
   // Define paths that should not include the DashboardLayout
   const noLayoutPaths = ["/login", "/logo"];
@@ -35,7 +48,11 @@ const RootLayout = ({ children }) => {
           <ToastContainer />
           <QueryProvider>
             {shouldUseDashboardLayout ? (
-              <DashboardLayout>{children}</DashboardLayout>
+              isAuthenticated ? (
+                <DashboardLayout>{children}</DashboardLayout>
+              ) : (
+                <LoadingSpinner /> // Show a fallback while redirecting
+              )
             ) : (
               children
             )}
